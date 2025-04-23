@@ -25,7 +25,7 @@
             <h1>Expense</h1>
         </div>
         <nav class="flex-1 p-4 space-y-2">
-            <a href="{{ route('dashboard') }}" class="flex items-center gap-2 hover:bg-gray-700 p-2 rounded">
+        <a href="{{ route('dashboard') }}" class="flex items-center gap-2 p-2 rounded {{ request()->routeIs('dashboard') ? 'bg-gray-700' : 'hover:bg-gray-700' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     class="icon icon-tabler icons-tabler-outline icon-tabler-dashboard">
@@ -36,7 +36,7 @@
                 </svg>
                 <span>Dashboard</span>
             </a>
-            <a href="{{ route('accounts') }}" class="flex items-center gap-2 hover:bg-gray-700 p-2 rounded">
+            <a href="{{ route('accounts') }}" class="flex items-center gap-2 p-2 rounded {{ request()->routeIs('accounts') ? 'bg-gray-700' : 'hover:bg-gray-700' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     class="icon icon-tabler icons-tabler-outline icon-tabler-receipt-rupee">
@@ -47,7 +47,7 @@
                 </svg>
                 <span>Accounts</span>
             </a>
-            <a href="{{ route('monthlyLedger') }}" class="flex items-center gap-2 hover:bg-gray-700 p-2 rounded">
+            <a href="{{ route('monthlyLedger') }}" class="flex items-center gap-2 p-2 rounded {{ request()->routeIs('monthlyLedger') ? 'bg-gray-700' : 'hover:bg-gray-700' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     class="icon icon-tabler icons-tabler-outline icon-tabler-calendar">
@@ -61,7 +61,7 @@
                 </svg>
                 <span>Monthly Ledger</span>
             </a>
-            <a href="{{ route('budget') }}" class="flex items-center gap-2 hover:bg-gray-700 p-2 rounded">
+            <a href="{{ route('budget') }}" class="flex items-center gap-2 p-2 rounded {{ request()->routeIs('budget') ? 'bg-gray-700' : 'hover:bg-gray-700' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     class="icon icon-tabler icons-tabler-outline icon-tabler-droplet-dollar">
@@ -73,7 +73,7 @@
                 </svg>
                 <span>Budget</span>
             </a>
-            <a href="{{ route('expenses') }}" class="flex items-center gap-2 hover:bg-gray-700 p-2 rounded">
+            <a href="{{ route('expenses') }}" class="flex items-center gap-2 p-2 rounded {{ request()->routeIs('expenses') ? 'bg-gray-700' : 'hover:bg-gray-700' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     class="icon icon-tabler icons-tabler-outline icon-tabler-message-dollar">
@@ -86,7 +86,7 @@
                 </svg>
                 <span>Expenses</span>
             </a>
-            <a href="{{ route('transactions') }}" class="flex items-center gap-2 hover:bg-gray-700 p-2 rounded">
+            <a href="{{ route('transactions') }}" class="flex items-center gap-2 p-2 rounded {{ request()->routeIs('transactions') ? 'bg-gray-700' : 'hover:bg-gray-700' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     class="icon icon-tabler icons-tabler-outline icon-tabler-transaction-rupee">
@@ -100,7 +100,7 @@
                 </svg>
                 <span>Transactions</span>
             </a>
-            <a href="{{ route('emergencySavings') }}" class="flex items-center gap-2 hover:bg-gray-700 p-2 rounded">
+            <a href="{{ route('emergencySavings') }}" class="flex items-center gap-2 p-2 rounded {{ request()->routeIs('emergencySavings') ? 'bg-gray-700' : 'hover:bg-gray-700' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     class="icon icon-tabler icons-tabler-outline icon-tabler-sos">
@@ -111,7 +111,7 @@
                 </svg>
                 <span>Emergency Savings</span>
             </a>
-            <a href="{{ route('exportData') }}" class="flex items-center gap-2 hover:bg-gray-700 p-2 rounded">
+            <a href="{{ route('exportData') }}" class="flex items-center gap-2 p-2 rounded {{ request()->routeIs('exportData') ? 'bg-gray-700' : 'hover:bg-gray-700' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     class="icon icon-tabler icons-tabler-outline icon-tabler-database-export">
@@ -125,7 +125,7 @@
                 </svg>
                 <span>Export Data</span>
             </a>
-            <a href="{{ route('user') }}" class="flex items-center gap-2 hover:bg-gray-700 p-2 rounded">
+            <a href="{{ route('user') }}" class="flex items-center gap-2 p-2 rounded {{ request()->routeIs('user') ? 'bg-gray-700' : 'hover:bg-gray-700' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     class="icon icon-tabler icons-tabler-outline icon-tabler-user">
