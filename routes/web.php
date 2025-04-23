@@ -1,12 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AccountController;
 
-Route::get('/', function () {
-    return view('pages.dashboard');
-})->name('dashboard');
+// Route::get('/', function () {
+//     return view('pages.dashboard');
+// })->name('dashboard');
 
-Route::view('/accounts', 'pages.accounts')->name('accounts');
+// Route::view('/accounts', 'pages.accounts')->name('accounts');
+Route::get('/', [AccountController::class, 'dashboard'])->name('dashboard');
+Route::get('/accounts', [AccountController::class, 'index'])->name('accounts');
+Route::view('/savings', 'pages.savings')->name('savings');
 Route::view('/monthlyLedger', 'pages.monthlyLedger')->name('monthlyLedger');
 Route::view('/budget', 'pages.budget')->name('budget');
 Route::view('/expenses', 'pages.expenses')->name('expenses');
