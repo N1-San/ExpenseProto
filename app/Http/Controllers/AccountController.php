@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class AccountController extends Controller
 {
+    public function dashboard(){
+        $accounts = $this->getCollection();
+
+        return view('pages.dashboard',[
+            'accounts' => $accounts,
+        ]);
+    }
     
     public function getCollection(){
         $accounts = Account::all()->toArray();
@@ -23,55 +30,72 @@ class AccountController extends Controller
         ]);
     }
 
-    public function dashboard(){
-        $accounts = $this->getCollection();
-
-        return view('pages.dashboard',[
-            'accounts' => $accounts,
-        ]);
-    }
     public function create()
     {
-        //
+        return view('pages.accounts.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
-    }
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'amount' => 'required|numeric',
+            'is_active' => 'required|boolean',
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Account $account)
-    {
-        //
-    }
+        Account::create([
+            'name' => $validatedData['name'],
+            'amount' => $validatedData['amount'],
+            'is_active' => $validatedData['is_active'],
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Account $account)
-    {
-        //
+        return redirect()->route('accounts')->with('success', 'Account created successfully.');
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Account $account)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
+    
     public function destroy(Account $account)
     {
-        //
+        Account::destroy($account->id);
+
+        return redirect()->route('accounts')->with('success', 'Account deleted successfully.');
     }
+    public function edit(Account $account)
+    {
+        return view('pages.accounts.edit', [
+            'account' => $account,
+            'is_active' => $account->is_active,
+        ]);
+    }
+    public function update(Request $request, Account $account)
+    {
+        $validatedData = $request->validate([
+            'id' => 'required|integer|exists:accounts,id',
+            'name' => 'required|string|max:255',
+            'amount' => 'required|numeric',
+            'is_active' => 'required|boolean',
+        ]);
+
+        $account = Account::findOrFail($validatedData['id']);
+        $account->update([
+            'name' => $validatedData['name'],
+            'amount' => $validatedData['amount'],
+            'is_active' => $validatedData['is_active'],
+        ]);
+
+        return redirect()->route('accounts')->with('success', 'Account updated successfully.');
+    }
+    public function toggleActive(Request $request)
+    {
+        $validatedData = $request->validate([
+            'id' => 'required|integer|exists:accounts,id',
+            'is_active' => 'required|boolean',
+        ]);
+
+        $account = Account::findOrFail($validatedData['id']);
+        $account->is_active = !$account->is_active;
+        $account->save();
+
+        return redirect()->route('accounts')->with('success', 'Account status toggled successfully.');
+        // dd($request->all());
+    }
+
 }
