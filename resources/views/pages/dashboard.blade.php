@@ -67,6 +67,21 @@
                         <h2 class="text-2xl font-bold">₹12,234</h2>
                         <p class="text-green-500 text-xs">+19% from last month</p>
                     </div>
+                    <div class="bg-gray-800 p-4 rounded-md">
+                        <p>This Month's Expenses Amount</p>
+                        <h2 class="text-2xl font-bold">₹12,234</h2>
+                        <p class="text-green-500 text-xs">+19% from last month</p>
+                    </div>
+                    <div class="bg-gray-800 p-4 rounded-md">
+                        <p>This Month's Budget</p>
+                        <h2 class="text-2xl font-bold">₹12,234</h2>
+                        <p class="text-green-500 text-xs">+19% from last month</p>
+                    </div>
+                    <div class="bg-gray-800 p-4 rounded-md">
+                        <p>Budget Used</p>
+                        <h2 class="text-2xl font-bold">₹12,234</h2>
+                        <p class="text-green-500 text-xs">+19% from last month</p>
+                    </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
