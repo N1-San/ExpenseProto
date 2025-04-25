@@ -98,32 +98,31 @@
                         <div class="grid grid-cols-3 gap-4 text-white text-sm">
                             @php
                                 $transactions = [
-                                    'Salary' => [15000, -500, -50, -100, -1000, 15000, -20, -30, -1500],
-                                    'Side Income' => [2000, -500, 1000, -400, -20, 10000, -10, -100, -200],
-                                    'Part-Time' => [5000, -500, -500, 5000, 5000, -10, -20, -500, -100],
+                                    'Salary edited' => [15000, -500, -50, -100, -1000, 15000, -20, -30, -1500],
+                                    'Side' => [2000, -500, 1000, -400, -20, 10000, -10, -100, -200],
+                                    'Business 1' => [5000, -500, -500, 5000, 5000, -10, -20, -500, -100],
                                 ];
                             @endphp
 
-                            @foreach ($transactions as $category => $values)
-                                                    <div class="bg-gray-900 p-4 rounded-md">
-                                                        <h2 class="text-lg font-semibold mb-2">{{ $category }}</h2>
-                                                        <ul class="space-y-1">
-                                                            @foreach ($values as $value)
-                                                                <li class="text-right {{ $value > 0 ? 'text-green-500' : 'text-red-500' }}">
-                                                                    {{ $value > 0 ? '+' : '' }}{{ $value }}
-                                                                </li>
-                                                            @endforeach
-                                                        </ul>
-                                                        <div class="mt-2 font-bold bg-gray-700 rounded-md p-2 text-right">
-                                                            Total:
-                                                            @php
-                                                                $total = array_sum($values);
-                                                            @endphp
-                                                            <span class="{{ $total >= 0 ? 'text-green-500' : 'text-red-500' }}">
-                                                                {{ $total }}
-                                                            </span>
-                                                        </div>
-                                                    </div>
+                            @foreach ($accounts as $account)
+                                @if ($account['is_active'])
+                                    <div class="bg-gray-900 p-4 rounded-md">
+                                        <h2 class="text-lg font-semibold mb-2">{{ $account['name'] }}</h2>
+                                        <ul class="space-y-1">
+                                            @foreach ($transactions[$account['name']] ?? [] as $value)
+                                                <li class="text-right {{ $value > 0 ? 'text-green-500' : 'text-red-500' }}">
+                                                    {{ $value > 0 ? '+' : '' }}{{ $value }}
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                        <div class="mt-2 font-bold bg-gray-700 rounded-md p-2 text-right">
+                                            Total:
+                                            <span class="{{ $account['amount'] >= 0 ? 'text-green-500' : 'text-red-500' }}">
+                                                {{ $account['amount'] }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                @endif
                             @endforeach
                         </div>
                     </div>
