@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\TransactionController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -35,12 +36,14 @@ Route::get('/accounts/edit/{account}', [AccountController::class,'edit'])->name(
 Route::put('/accounts/update', [AccountController::class,'update'])->name('accounts.update');
 Route::post('/accounts/toggleActive/{account}', [AccountController::class,'toggleActive'])->name('accounts.toggleActive');
 
+Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions');
+Route::get('/transactions/create', [TransactionController::class,'create'])->name('transactions.create');
+Route::post('/transactions/store', [TransactionController::class,'store'])->name('transactions.store');
 
 Route::view('/savings', 'pages.savings')->name('savings');
 Route::view('/monthlyLedger', 'pages.monthlyLedger')->name('monthlyLedger');
 Route::view('/budget', 'pages.budget')->name('budget');
 Route::view('/expenses', 'pages.expenses')->name('expenses');
-Route::view('/transactions', 'pages.transactions')->name('transactions');
 Route::view('/emergencySavings', 'pages.emergencySavings')->name('emergencySavings');
 Route::view('/exportData', 'pages.exportData')->name('exportData');
 Route::view('/user', 'pages.user')->name('user');
