@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\TransactionController;
 
@@ -26,7 +27,7 @@ require __DIR__.'/auth.php';
 // })->name('dashboard');
 
 // Route::view('/accounts', 'pages.accounts')->name('accounts');
-Route::get('/dashboard', [AccountController::class, 'dashboard'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
 Route::get('/accounts', [AccountController::class, 'index'])->name('accounts');
 Route::get('/accounts/create', [AccountController::class,'create'])->name('accounts.create');

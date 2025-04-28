@@ -21,6 +21,39 @@
                 </div>
             </div>
 
+            <h2 id="internet-speed-heading" class="text-green-500 mt-4">Calculating internet speed...</h2>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function () {
+            let userImageLink = "https://oneprocrm-cloud-s3-dev.s3.ap-south-1.amazonaws.com/default.png";
+            let time_start, end_time;
+
+            // The size in bytes
+            let downloadSize = 5616998;
+            let downloadImgSrc = new Image();
+
+            let speedHeading = document.getElementById("internet-speed-heading");
+
+            downloadImgSrc.onload = function () {
+                end_time = new Date().getTime();
+                displaySpeed();
+            };
+            time_start = new Date().getTime();
+            downloadImgSrc.src = userImageLink;
+
+            function displaySpeed() {
+                let timeDuration = (end_time - time_start) / 1000;
+                let loadedBits = downloadSize * 8;
+
+                let bps = (loadedBits / timeDuration).toFixed(2);
+                let speedInKbps = (bps / 1024).toFixed(2);
+                let speedInMbps = (speedInKbps / 1024).toFixed(2);
+                let speedInMBps = (speedInMbps / 8).toFixed(2); // Convert Mbps to MBps
+
+                speedHeading.textContent = "Your internet connection speed is: " +
+                    speedInMBps + " MBps (" + speedInMbps + " Mbps)";
+            }
+        });
+    </script>
             <!-- Content -->
             <div class="p-2">
                 <!-- Tabs -->
@@ -30,7 +63,6 @@
                     <button class="text-gray-400">Reports</button>
                     <button class="text-gray-400">Notifications</button>
                 </div>
-
                 <!-- Metrics Cards -->
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
                     @php
@@ -142,7 +174,7 @@
                         {
                             label: 'Total Savings',
                             data: [1200, 1500, 1800, 2000, 1700, 1900, 2200, 2400, 2100, 2300, 2500, 2700],
-                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderColor: 'rgb(0, 255, 255)',
                             backgroundColor: 'rgba(75, 192, 192, 0.2)',
                             borderWidth: 2,
                             tension: 0.4
@@ -150,7 +182,7 @@
                         {
                             label: 'Salary Savings',
                             data: [1000, 1200, 1400, 1600, 1500, 1700, 2000, 2200, 1900, 2100, 2300, 2500],
-                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderColor: 'rgb(0, 153, 255)',
                             backgroundColor: 'rgba(54, 162, 235, 0.2)',
                             borderWidth: 2,
                             tension: 0.4
@@ -158,7 +190,7 @@
                         {
                             label: 'Side Savings',
                             data: [200, 300, 400, 500, 200, 300, 200, 200, 200, 200, 200, 200],
-                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderColor: 'rgb(255, 0, 55)',
                             backgroundColor: 'rgba(255, 99, 132, 0.2)',
                             borderWidth: 2,
                             tension: 0.4

@@ -7,13 +7,6 @@ use Illuminate\Http\Request;
 
 class AccountController extends Controller
 {
-    public function dashboard(){
-        $accounts = $this->getCollection();
-
-        return view('pages.dashboard',[
-            'accounts' => $accounts,
-        ]);
-    }
     
     public function getCollection(){
         $accounts = Account::all()->toArray();
