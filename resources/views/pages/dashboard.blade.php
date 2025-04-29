@@ -20,40 +20,63 @@
                     <div class="w-8 h-8 rounded-md-full bg-gray-600"></div>
                 </div>
             </div>
-
+            
+        <div>
             <h2 id="internet-speed-heading" class="text-green-500 mt-4">Calculating internet speed...</h2>
-    <script type="text/javascript">
-        document.addEventListener("DOMContentLoaded", function () {
-            let userImageLink = "https://oneprocrm-cloud-s3-dev.s3.ap-south-1.amazonaws.com/default.png";
-            let time_start, end_time;
 
-            // The size in bytes
-            let downloadSize = 5616998;
-            let downloadImgSrc = new Image();
+            <script type="text/javascript">
+                document.addEventListener("DOMContentLoaded", function () {
+                    const speedHeading = document.getElementById("internet-speed-heading");
 
-            let speedHeading = document.getElementById("internet-speed-heading");
+                    const imageURL = "https://oneprocrm-cloud-s3-dev.s3.ap-south-1.amazonaws.com/default.png";
+                    const downloadSizeBytes = 1048576; // ~1MB for a balanced test
 
-            downloadImgSrc.onload = function () {
-                end_time = new Date().getTime();
-                displaySpeed();
-            };
-            time_start = new Date().getTime();
-            downloadImgSrc.src = userImageLink;
+                    let testInterval = 1000; // 10 seconds
+                    let lastTestId = 0;
 
-            function displaySpeed() {
-                let timeDuration = (end_time - time_start) / 1000;
-                let loadedBits = downloadSize * 8;
+                    function runSpeedTest(testId) {
+                        const img = new Image();
+                        const startTime = new Date().getTime();
 
-                let bps = (loadedBits / timeDuration).toFixed(2);
-                let speedInKbps = (bps / 1024).toFixed(2);
-                let speedInMbps = (speedInKbps / 1024).toFixed(2);
-                let speedInMBps = (speedInMbps / 8).toFixed(2); // Convert Mbps to MBps
+                        img.onload = function () {
+                            // If a newer test started, ignore this result
+                            if (testId < lastTestId) return;
 
-                speedHeading.textContent = "Your internet connection speed is: " +
-                    speedInMBps + " MBps (" + speedInMbps + " Mbps)";
-            }
-        });
-    </script>
+                            const endTime = new Date().getTime();
+                            const duration = (endTime - startTime) / 1000;
+                            const bitsLoaded = downloadSizeBytes * 8;
+                            const speedBps = bitsLoaded / duration;
+                            const speedMbps = (speedBps / 1024 / 1024).toFixed(2);
+                            const speedMBps = (speedMbps / 8).toFixed(2);
+
+                            speedHeading.textContent = `Your internet speed: ${speedMBps} MBps (${speedMbps} Mbps)`;
+                        };
+
+                        img.onerror = function () {
+                            if (testId < lastTestId) return;
+                            speedHeading.textContent = "Unable to measure internet speed (network error).";
+                        };
+
+                        // Append cache buster
+                        img.src = imageURL + "?cache-bust=" + Math.random();
+                    }
+
+                    function startSpeedChecks() {
+                        setInterval(() => {
+                            lastTestId++;
+                            runSpeedTest(lastTestId);
+                        }, testInterval);
+
+                        // Run immediately on first load
+                        lastTestId++;
+                        runSpeedTest(lastTestId);
+                    }
+
+                    startSpeedChecks();
+                });
+            </script>
+
+        </div>
             <!-- Content -->
             <div class="p-2">
                 <!-- Tabs -->
@@ -124,29 +147,30 @@
 
                     <div class="bg-gray-800 rounded-md p-2">
                         <h1 class="text-white text-xl font-semibold mb-4 rounded-md bg-gray-900 p-4">
-                            Individual Account Transactions
-                        </h1>
-
+                            Individual Account Transactions</h1>
                         <div class="grid grid-cols-3 gap-4 text-white text-sm">
-                            @php
-                                $transactions = [
-                                    'Salary edited' => [15000, -500, -50, -100, -1000, 15000, -20, -30, -1500],
-                                    'Side' => [2000, -500, 1000, -400, -20, 10000, -10, -100, -200],
-                                    'Business 1' => [5000, -500, -500, 5000, 5000, -10, -20, -500, -100],
-                                ];
-                            @endphp
-
                             @foreach ($accounts as $account)
                                 @if ($account['is_active'])
-                                    <div class="bg-gray-900 p-4 rounded-md">
-                                        <h2 class="text-lg font-semibold mb-2">{{ $account['name'] }}</h2>
-                                        <ul class="space-y-1">
-                                            @foreach ($transactions[$account['name']] ?? [] as $value)
-                                                <li class="text-right {{ $value > 0 ? 'text-green-500' : 'text-red-500' }}">
-                                                    {{ $value > 0 ? '+' : '' }}{{ $value }}
-                                                </li>
-                                            @endforeach
-                                        </ul>
+                                    <div class="bg-gray-900 p-4 rounded-md flex flex-col justify-between">
+                                        <div>
+                                            <h2 class="text-lg font-semibold mb-2">{{ $account['name'] }}</h2>
+                                            <ul class="space-y-1">
+                                                @php
+                                                    $accountTransactions = array_filter($transactions, function ($transaction) use ($account) {
+                                                        return $transaction['account_id'] == $account['id'];
+                                                    });
+                                                @endphp
+                                                @if (!empty($accountTransactions))
+                                                    @foreach ($accountTransactions as $transaction)
+                                                        <li class="text-right {{ $transaction['transaction_type'] === 'credit' ? 'text-green-500' : 'text-red-500' }}">
+                                                            {{ $transaction['transaction_type'] === 'credit' ? '+' : '-' }}{{ $transaction['amount'] }}
+                                                        </li>
+                                                    @endforeach
+                                                @else
+                                                    <li class="text-gray-500">No transactions available</li>
+                                                @endif
+                                            </ul>
+                                        </div>
                                         <div class="mt-2 font-bold bg-gray-700 rounded-md p-2 text-right">
                                             Total:
                                             <span class="{{ $account['amount'] >= 0 ? 'text-green-500' : 'text-red-500' }}">

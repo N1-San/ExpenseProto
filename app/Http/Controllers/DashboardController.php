@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Account;
+use App\Models\Transaction;
 
 class DashboardController extends Controller
 {
@@ -13,7 +14,7 @@ class DashboardController extends Controller
         return $accounts;
     }
 
-    public function getTransactions(Request $request){
+    public function getTransactions(){
         $transactions = Transaction::all()->toArray();
         return $transactions;
     }
@@ -21,7 +22,7 @@ class DashboardController extends Controller
     public function dashboard(){
         $accounts = $this->getAccounts();
         $transactions = $this->getTransactions();
-
+        // dd($transactions);
         return view('pages.dashboard',[
             'accounts' => $accounts,
             'transactions'=> $transactions
