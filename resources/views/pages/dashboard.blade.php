@@ -20,63 +20,52 @@
                     <div class="w-8 h-8 rounded-md-full bg-gray-600"></div>
                 </div>
             </div>
-            
-        <div>
-            <h2 id="internet-speed-heading" class="text-green-500 mt-4">Calculating internet speed...</h2>
 
-            <script type="text/javascript">
-                document.addEventListener("DOMContentLoaded", function () {
-                    const speedHeading = document.getElementById("internet-speed-heading");
+            <div>
+                <h2 id="internet-speed-heading" class="text-green-500 mt-4">Calculating internet speed...</h2>
 
-                    const imageURL = "https://oneprocrm-cloud-s3-dev.s3.ap-south-1.amazonaws.com/default.png";
-                    const downloadSizeBytes = 1048576; // ~1MB for a balanced test
+                <script type="text/javascript">
+                    document.addEventListener("DOMContentLoaded", function () {
+                        const speedHeading = document.getElementById("internet-speed-heading");
 
-                    let testInterval = 1000; // 10 seconds
-                    let lastTestId = 0;
+                        // Use a real remote file for accurate results (replace with your own large static file if needed)
+                        const fileURL = "http://localhost:8000/speed-test/testfiletwo.bin"; 
+                        const downloadSizeBytes = 2 * 1024 * 1024; // ~1MB file for balanced test
 
-                    function runSpeedTest(testId) {
-                        const img = new Image();
-                        const startTime = new Date().getTime();
+                        async function runSpeedTest() {
+                            const startTime = performance.now();
 
-                        img.onload = function () {
-                            // If a newer test started, ignore this result
-                            if (testId < lastTestId) return;
+                            try {
+                                const response = await fetch(fileURL + "?cache-bust=" + Math.random());
+                                const reader = response.body.getReader();
+                                let receivedLength = 0;
 
-                            const endTime = new Date().getTime();
-                            const duration = (endTime - startTime) / 1000;
-                            const bitsLoaded = downloadSizeBytes * 8;
-                            const speedBps = bitsLoaded / duration;
-                            const speedMbps = (speedBps / 1024 / 1024).toFixed(2);
-                            const speedMBps = (speedMbps / 8).toFixed(2);
+                                while (true) {
+                                    const { done, value } = await reader.read();
+                                    if (done) break;
+                                    receivedLength += value.length;
+                                }
 
-                            speedHeading.textContent = `Your internet speed: ${speedMBps} MBps (${speedMbps} Mbps)`;
-                        };
+                                const endTime = performance.now();
+                                const duration = (endTime - startTime) / 1000;
+                                const bitsLoaded = receivedLength * 8;
+                                const speedMbps = bitsLoaded / duration / 1024 / 1024;
+                                const speedMBps = speedMbps / 8;
 
-                        img.onerror = function () {
-                            if (testId < lastTestId) return;
-                            speedHeading.textContent = "Unable to measure internet speed (network error).";
-                        };
+                                speedHeading.textContent = `Your internet speed: ${speedMBps.toFixed(2)} MBps (${speedMbps.toFixed(2)} Mbps)`;
+                            } catch (e) {
+                                speedHeading.textContent = "Unable to measure internet speed (network error).";
+                                console.error("Speed test failed:", e);
+                            }
+                        }
 
-                        // Append cache buster
-                        img.src = imageURL + "?cache-bust=" + Math.random();
-                    }
+                        // Run test every 1 second
+                        runSpeedTest(); // Initial run
+                        setInterval(runSpeedTest, 1000);
+                    });
+                </script>
+            </div>
 
-                    function startSpeedChecks() {
-                        setInterval(() => {
-                            lastTestId++;
-                            runSpeedTest(lastTestId);
-                        }, testInterval);
-
-                        // Run immediately on first load
-                        lastTestId++;
-                        runSpeedTest(lastTestId);
-                    }
-
-                    startSpeedChecks();
-                });
-            </script>
-
-        </div>
             <!-- Content -->
             <div class="p-2">
                 <!-- Tabs -->
@@ -150,35 +139,36 @@
                             Individual Account Transactions</h1>
                         <div class="grid grid-cols-3 gap-4 text-white text-sm">
                             @foreach ($accounts as $account)
-                                @if ($account['is_active'])
-                                    <div class="bg-gray-900 p-4 rounded-md flex flex-col justify-between">
-                                        <div>
-                                        <h2 class="text-lg font-semibold mb-2">{{ $account['name'] }}</h2>
-                                        <ul class="space-y-1">
-                                                @php
-                                                    $accountTransactions = array_filter($transactions, function ($transaction) use ($account) {
-                                                        return $transaction['account_id'] == $account['id'];
-                                                    });
-                                                @endphp
-                                                @if (!empty($accountTransactions))
-                                                    @foreach ($accountTransactions as $transaction)
-                                                        <li class="text-right {{ $transaction['transaction_type'] === 'credit' ? 'text-green-500' : 'text-red-500' }}">
-                                                            {{ $transaction['transaction_type'] === 'credit' ? '+' : '-' }}{{ $transaction['amount'] }}
-                                                </li>
-                                            @endforeach
-                                                @else
-                                                    <li class="text-gray-500">No transactions available</li>
+                                                @if ($account['is_active'])
+                                                                    <div class="bg-gray-900 p-4 rounded-md flex flex-col justify-between">
+                                                                        <div>
+                                                                            <h2 class="text-lg font-semibold mb-2">{{ $account['name'] }}</h2>
+                                                                            <ul class="space-y-1">
+                                                                                @php
+                                                                                    $accountTransactions = array_filter($transactions, function ($transaction) use ($account) {
+                                                                                        return $transaction['account_id'] == $account['id'];
+                                                                                    });
+                                                                                @endphp
+                                                                                @if (!empty($accountTransactions))
+                                                                                    @foreach ($accountTransactions as $transaction)
+                                                                                        <li
+                                                                                            class="text-right {{ $transaction['transaction_type'] === 'credit' ? 'text-green-500' : 'text-red-500' }}">
+                                                                                            {{ $transaction['transaction_type'] === 'credit' ? '+' : '-' }}{{ $transaction['amount'] }}
+                                                                                        </li>
+                                                                                    @endforeach
+                                                                                @else
+                                                                                    <li class="text-gray-500">No transactions available</li>
+                                                                                @endif
+                                                                            </ul>
+                                                                        </div>
+                                                                        <div class="mt-2 font-bold bg-gray-700 rounded-md p-2 text-right">
+                                                                            Total:
+                                                                            <span class="{{ $account['amount'] >= 0 ? 'text-green-500' : 'text-red-500' }}">
+                                                                                {{ $account['amount'] }}
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
                                                 @endif
-                                        </ul>
-                                        </div>
-                                        <div class="mt-2 font-bold bg-gray-700 rounded-md p-2 text-right">
-                                            Total:
-                                            <span class="{{ $account['amount'] >= 0 ? 'text-green-500' : 'text-red-500' }}">
-                                                {{ $account['amount'] }}
-                                            </span>
-                                        </div>
-                                    </div>
-                                @endif
                             @endforeach
                         </div>
                     </div>
