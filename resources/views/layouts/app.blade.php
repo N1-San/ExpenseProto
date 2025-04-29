@@ -16,16 +16,18 @@
 
         <!-- Sidebar -->
         <aside class="w-64 h-screen bg-gray-900 text-white flex flex-col fixed top-0 left-0">
-            <div class="bg-blue-500 text-white p-4 text-xl font-bold flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"
-                    class="icon icon-tabler icons-tabler-filled icon-tabler-layout">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <path d="M8 3a3 3 0 0 1 3 3v1a3 3 0 0 1 -3 3h-2a3 3 0 0 1 -3 -3v-1a3 3 0 0 1 3 -3z" />
-                    <path d="M8 12a3 3 0 0 1 3 3v3a3 3 0 0 1 -3 3h-2a3 3 0 0 1 -3 -3v-3a3 3 0 0 1 3 -3z" />
-                    <path d="M18 3a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-2a3 3 0 0 1 -3 -3v-12a3 3 0 0 1 3 -3z" />
-                </svg>
-                <h1>Expense</h1>
-            </div>
+            <a href="{{ url('/') }}">
+                <div class="bg-blue-500 text-white p-4 text-xl font-bold flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-layout">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M8 3a3 3 0 0 1 3 3v1a3 3 0 0 1 -3 3h-2a3 3 0 0 1 -3 -3v-1a3 3 0 0 1 3 -3z" />
+                        <path d="M8 12a3 3 0 0 1 3 3v3a3 3 0 0 1 -3 3h-2a3 3 0 0 1 -3 -3v-3a3 3 0 0 1 3 -3z" />
+                        <path d="M18 3a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-2a3 3 0 0 1 -3 -3v-12a3 3 0 0 1 3 -3z" />
+                    </svg>
+                    <h1>Expense</h1>
+                </div>
+            </a>
             <nav class="flex-1 p-4 space-y-2">
                 <a href="{{ route('dashboard') }}"
                     class="flex items-center gap-2 p-2 rounded {{ request()->routeIs('dashboard') ? 'bg-gray-700' : 'hover:bg-gray-700' }}">
@@ -50,6 +52,21 @@
                         <path d="M9 10h6" />
                     </svg>
                     <span>Accounts</span>
+                    <a href="{{ route('transactions') }}"
+                        class="flex items-center gap-2 p-2 rounded {{ request()->routeIs('transactions') ? 'bg-gray-700' : 'hover:bg-gray-700' }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="icon icon-tabler icons-tabler-outline icon-tabler-transaction-rupee">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M21 12h-6h1a3 3 0 0 1 0 6h-1l3 3" />
+                            <path d="M15 15h6" />
+                            <path d="M5 5m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                            <path d="M17 5m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                            <path d="M7 5h8" />
+                            <path d="M7 5v8a3 3 0 0 0 3 3h1" />
+                        </svg>
+                        <span>Transactions</span>
+                    </a>
                     <a href="{{ route('savings') }}"
                         class="flex items-center gap-2 p-2 rounded {{ request()->routeIs('savings') ? 'bg-gray-700' : 'hover:bg-gray-700' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -103,21 +120,6 @@
                             <path d="M19 21v1m0 -8v1" />
                         </svg>
                         <span>Expenses</span>
-                    </a>
-                    <a href="{{ route('transactions') }}"
-                        class="flex items-center gap-2 p-2 rounded {{ request()->routeIs('transactions') ? 'bg-gray-700' : 'hover:bg-gray-700' }}">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="icon icon-tabler icons-tabler-outline icon-tabler-transaction-rupee">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path d="M21 12h-6h1a3 3 0 0 1 0 6h-1l3 3" />
-                            <path d="M15 15h6" />
-                            <path d="M5 5m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                            <path d="M17 5m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                            <path d="M7 5h8" />
-                            <path d="M7 5v8a3 3 0 0 0 3 3h1" />
-                        </svg>
-                        <span>Transactions</span>
                     </a>
                     <a href="{{ route('emergencySavings') }}"
                         class="flex items-center gap-2 p-2 rounded {{ request()->routeIs('emergencySavings') ? 'bg-gray-700' : 'hover:bg-gray-700' }}">
