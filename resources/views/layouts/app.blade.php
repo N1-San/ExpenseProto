@@ -11,7 +11,7 @@
 </head>
 
 <body class="bg-gray-800 text-white">
-    <div class="flex">
+    <div class="flex flex-col h-full">
 
 
         <!-- Sidebar -->
@@ -158,6 +158,59 @@
                         <span>User</span>
                     </a>
             </nav>
+            <div class="mt-auto">
+                @guest
+                    <!-- Guest (Not Logged In) -->
+                    <a href="{{ route('login') }}"
+                        class="flex items-center gap-2 p-2 rounded {{ request()->routeIs('login') ? 'bg-green-700' : 'hover:bg-green-700' }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="icon icon-tabler icons-tabler-outline icon-tabler-login-2">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M9 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" />
+                            <path d="M3 12h13l-3 -3" />
+                            <path d="M13 15l3 -3" />
+                        </svg>
+                        Login</a>
+                    <a href="{{ route('register') }}"
+                        class="flex items-center gap-2 p-2 rounded {{ request()->routeIs('register') ? 'bg-blue-700' : 'hover:bg-blue-700' }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="icon icon-tabler icons-tabler-outline icon-tabler-user-share">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                            <path d="M6 21v-2a4 4 0 0 1 4 -4h3" />
+                            <path d="M16 22l5 -5" />
+                            <path d="M21 21.5v-4.5h-4.5" />
+                        </svg>
+                        Register</a>
+                @endguest
+
+                @auth
+                    <!-- Authenticated User -->
+                    <div class="user-info mt-2">
+                        <p class="mb-2">Welcome, {{ auth()->user()->name }}</p>
+
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <div
+                                class="flex items-center rounded {{ request()->routeIs('logout') ? 'bg-red-700' : 'hover:bg-red-700' }}">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-login">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M15 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                                    <path d="M21 12h-13l3 -3" />
+                                    <path d="M11 15l-3 -3" />
+                                </svg><button type="submit" class="flex items-center gap-2 p-2 rounded">Logout</button>
+                            </div>
+                        </form>
+                    </div>
+                @endauth
+            </div>
+
         </aside>
     </div>
     <!-- Main content -->
