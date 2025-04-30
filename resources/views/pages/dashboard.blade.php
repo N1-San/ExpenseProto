@@ -21,7 +21,51 @@
                 </div>
             </div>
 
-            
+            <div>
+                <h2 id="internet-speed-heading" class="text-green-500 mt-4">Calculating internet speed...</h2>
+
+                <script type="text/javascript">
+                    document.addEventListener("DOMContentLoaded", function () {
+                        const speedHeading = document.getElementById("internet-speed-heading");
+
+                        // Use a real remote file for accurate results (replace with your own large static file if needed)
+                        const fileURL = "http://localhost:8000/speed-test/testfiletwo.bin"; 
+                        const downloadSizeBytes = 2 * 1024 * 1024; // ~1MB file for balanced test
+
+                        async function runSpeedTest() {
+                            const startTime = performance.now();
+
+                            try {
+                                const response = await fetch(fileURL + "?cache-bust=" + Math.random());
+                                const reader = response.body.getReader();
+                                let receivedLength = 0;
+
+                                while (true) {
+                                    const { done, value } = await reader.read();
+                                    if (done) break;
+                                    receivedLength += value.length;
+                                }
+
+                                const endTime = performance.now();
+                                const duration = (endTime - startTime) / 1000;
+                                const bitsLoaded = receivedLength * 8;
+                                const speedMbps = bitsLoaded / duration / 1024 / 1024;
+                                const speedMBps = speedMbps / 8;
+
+                                speedHeading.textContent = `Your internet speed: ${speedMBps.toFixed(2)} MBps (${speedMbps.toFixed(2)} Mbps)`;
+                            } catch (e) {
+                                speedHeading.textContent = "Unable to measure internet speed (network error).";
+                                console.error("Speed test failed:", e);
+                            }
+                        }
+
+                        // Run test every 1 second
+                        runSpeedTest(); // Initial run
+                        setInterval(runSpeedTest, 1000);
+                    });
+                </script>
+            </div>
+
             <!-- Content -->
             <div class="p-2">
                 <!-- Tabs -->
