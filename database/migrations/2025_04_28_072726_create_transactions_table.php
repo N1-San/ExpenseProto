@@ -17,7 +17,7 @@ return new class extends Migration
             $table->decimal('amount', 15, 2);
             $table->enum('transaction_type', ['credit', 'debit']); // Credit or Debit
             $table->string('note')->nullable();
-            $table->date('transaction_date');
+            $table->date('transaction_date')->useCurrent();
             $table->timestamps();
             $table->softDeletes();
         });

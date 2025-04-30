@@ -71,7 +71,7 @@ class TransactionController extends Controller
             });
 
             return redirect()->route('transactions')->with('success', 'Transaction recorded.');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             dd($e->getMessage());
             return back()->withErrors(['error' => $e->getMessage()]);
         }
