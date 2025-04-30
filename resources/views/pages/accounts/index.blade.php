@@ -30,69 +30,68 @@
                     <tr>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
                             <div class="flex items-center space-x-2"></div>
-                            <input type="checkbox" id="select-all"
-                                class="form-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-        </div>
-
-        </th>
-        <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
-            Name
-        </th>
-        <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
-            Total Amount
-        </th>
-        <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
-            Is Active
-        </th>
-        <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
-            Actions
-        </th>
-        </tr>
-        </thead>
-        <tbody class="bg-gray-800 divide-y divide-gray-700">
-            @foreach($accounts as $account)
-                @if($account['is_active'])
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                            <div class="flex items-center">
-                                <input type="checkbox"
-                                    class="form-checkbox row-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                <input type="checkbox" id="select-all"
+                                    class="form-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
                             </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                            {{ $account['name'] }}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                            ₹{{ $account['amount'] }}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                            {{ $account['is_active'] ? 'Active' : 'Inactive' }}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300 flex space-x-2">
-                            <a href="{{ route('accounts.edit', $account['id']) }}"
-                                class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600">Edit</a>
-
-                            <form action="{{ route('accounts.destroy', $account['id']) }}" method="POST"
-                                onsubmit="return confirm('Are you sure?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit"
-                                    class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Delete</button>
-                            </form>
-                            <form action="{{ route('accounts.toggleActive', $account['id']) }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="id" value="{{ $account['id'] }}">
-                                <input type="hidden" name="is_active" value="{{ $account['is_active'] }}">
-                                <button type="submit"
-                                    class="{{ $account['is_active'] ? 'bg-green-500' : 'bg-yellow-500' }} text-white px-2 py-1 rounded hover:{{ $account['is_active'] ? 'bg-green-600' : 'bg-yellow-600' }}">
-                                    {{ $account['is_active'] ? 'Deactivate' : 'Activate' }}
-                                </button>
-                            </form>
-                        </td>
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
+                            Name
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
+                            Total Amount
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
+                            Is Active
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
+                            Actions
+                        </th>
                     </tr>
-                @endif
-            @endforeach
-        </tbody>
+                </thead>
+                <tbody class="bg-gray-800 divide-y divide-gray-700">
+                    @foreach($accounts as $account)
+                        @if($account['is_active'])
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                                    <div class="flex items-center">
+                                        <input type="checkbox"
+                                            class="form-checkbox row-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                                    {{ $account['name'] }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                                    ₹{{ $account['amount'] }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                                    {{ $account['is_active'] ? 'Active' : 'Inactive' }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300 flex space-x-2">
+                                    <a href="{{ route('accounts.edit', $account['id']) }}"
+                                        class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600">Edit</a>
+
+                                    <form action="{{ route('accounts.destroy', $account['id']) }}" method="POST"
+                                        onsubmit="return confirm('Are you sure?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Delete</button>
+                                    </form>
+                                    <form action="{{ route('accounts.toggleActive', $account['id']) }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $account['id'] }}">
+                                        <input type="hidden" name="is_active" value="{{ $account['is_active'] }}">
+                                        <button type="submit"
+                                            class="{{ $account['is_active'] ? 'bg-green-500' : 'bg-yellow-500' }} text-white px-2 py-1 rounded hover:{{ $account['is_active'] ? 'bg-green-600' : 'bg-yellow-600' }}">
+                                            {{ $account['is_active'] ? 'Deactivate' : 'Activate' }}
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endif
+                    @endforeach
+                </tbody>
         </table>
     </div>
 
@@ -104,68 +103,68 @@
                 <tr>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
                         <div class="flex items-center space-x-2"></div>
-                        <input type="checkbox" id="select-all"
-                            class="form-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-    </div>
-
-    </th>
-    <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
-        Name
-    </th>
-    <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
-        Total Amount
-    </th>
-    <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
-        Is Active
-    </th>
-    <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
-        Actions
-    </th>
-    </tr>
-    </thead>
-    <tbody class="bg-gray-800 divide-y divide-gray-700">
-        @foreach($accounts as $account)
-            @if(!$account['is_active'])
-                <tr>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                        <div class="flex items-center">
-                            <input type="checkbox"
-                                class="form-checkbox row-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                            <input type="checkbox" id="select-all"
+                                class="form-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
                         </div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                        {{ $account['name'] }}
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                        ₹{{ $account['amount'] }}
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                        {{ $account['is_active'] ? 'Active' : 'Inactive' }}
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300 flex space-x-2">
-                        <a href="{{ route('accounts.edit', $account['id']) }}"
-                            class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600">Edit</a>
-                        <form action="{{ route('accounts.destroy', $account['id']) }}" method="POST"
-                            onsubmit="return confirm('Are you sure?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Delete</button>
-                        </form>
-                        <form action="{{ route('accounts.toggleActive', $account['id']) }}" method="POST">
-                            <input type="hidden" name="id" value="{{ $account['id'] }}">
-                            <input type="hidden" name="is_active" value="{{ $account['is_active'] }}">
-                            @csrf
-                            <button type="submit"
-                                class="{{ $account['is_active'] ? 'bg-green-500' : 'bg-yellow-500' }} text-white px-2 py-1 rounded hover:{{ $account['is_active'] ? 'bg-green-600' : 'bg-yellow-600' }}">
-                                {{ $account['is_active'] ? 'Deactivate' : 'Activate' }}
-                            </button>
-                        </form>
-                    </td>
+
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
+                        Name
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
+                        Total Amount
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
+                        Is Active
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
+                        Actions
+                    </th>
                 </tr>
-            @endif
-        @endforeach
-    </tbody>
-    </table>
+            </thead>
+            <tbody class="bg-gray-800 divide-y divide-gray-700">
+                @foreach($accounts as $account)
+                    @if(!$account['is_active'])
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                                <div class="flex items-center">
+                                    <input type="checkbox"
+                                        class="form-checkbox row-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                                {{ $account['name'] }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                                ₹{{ $account['amount'] }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                                {{ $account['is_active'] ? 'Active' : 'Inactive' }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300 flex space-x-2">
+                                <a href="{{ route('accounts.edit', $account['id']) }}"
+                                    class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600">Edit</a>
+                                <form action="{{ route('accounts.destroy', $account['id']) }}" method="POST"
+                                    onsubmit="return confirm('Are you sure?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Delete</button>
+                                </form>
+                                <form action="{{ route('accounts.toggleActive', $account['id']) }}" method="POST">
+                                    <input type="hidden" name="id" value="{{ $account['id'] }}">
+                                    <input type="hidden" name="is_active" value="{{ $account['is_active'] }}">
+                                    @csrf
+                                    <button type="submit"
+                                        class="{{ $account['is_active'] ? 'bg-green-500' : 'bg-yellow-500' }} text-white px-2 py-1 rounded hover:{{ $account['is_active'] ? 'bg-green-600' : 'bg-yellow-600' }}">
+                                        {{ $account['is_active'] ? 'Deactivate' : 'Activate' }}
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endif
+                @endforeach
+            </tbody>
+        </table>    
     </div>
 
 
