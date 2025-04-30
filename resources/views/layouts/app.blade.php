@@ -16,10 +16,24 @@
 
         <!-- Sidebar -->
         <aside class="w-64 h-screen bg-gray-900 text-white flex flex-col fixed top-0 left-0">
-            <a href="{{ url('/') }}">
+            @guest
+                <a href="{{ url('/') }}">
+                    <div class="bg-blue-500 text-white p-4 text-xl font-bold flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-layout">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M8 3a3 3 0 0 1 3 3v1a3 3 0 0 1 -3 3h-2a3 3 0 0 1 -3 -3v-1a3 3 0 0 1 3 -3z" />
+                            <path d="M8 12a3 3 0 0 1 3 3v3a3 3 0 0 1 -3 3h-2a3 3 0 0 1 -3 -3v-3a3 3 0 0 1 3 -3z" />
+                            <path d="M18 3a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-2a3 3 0 0 1 -3 -3v-12a3 3 0 0 1 3 -3z" />
+                        </svg>
+                        <h1>Expense</h1>
+                    </div>
+                </a>
+            @endguest
+            @auth
                 <div class="bg-blue-500 text-white p-4 text-xl font-bold flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-layout">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"
+                        class="icon icon-tabler icons-tabler-filled icon-tabler-layout">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <path d="M8 3a3 3 0 0 1 3 3v1a3 3 0 0 1 -3 3h-2a3 3 0 0 1 -3 -3v-1a3 3 0 0 1 3 -3z" />
                         <path d="M8 12a3 3 0 0 1 3 3v3a3 3 0 0 1 -3 3h-2a3 3 0 0 1 -3 -3v-3a3 3 0 0 1 3 -3z" />
@@ -27,31 +41,31 @@
                     </svg>
                     <h1>Expense</h1>
                 </div>
-            </a>
-            <nav class="flex-1 p-4 space-y-2">
-                <a href="{{ route('dashboard') }}"
-                    class="flex items-center gap-2 p-2 rounded {{ request()->routeIs('dashboard') ? 'bg-gray-700' : 'hover:bg-gray-700' }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="icon icon-tabler icons-tabler-outline icon-tabler-dashboard">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M12 13m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                        <path d="M13.45 11.55l2.05 -2.05" />
-                        <path d="M6.4 20a9 9 0 1 1 11.2 0z" />
-                    </svg>
-                    <span>Dashboard</span>
-                </a>
-                <a href="{{ route('accounts') }}"
-                    class="flex items-center gap-2 p-2 rounded {{ request()->routeIs('accounts') ? 'bg-gray-700' : 'hover:bg-gray-700' }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="icon icon-tabler icons-tabler-outline icon-tabler-receipt-rupee">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16l-3 -2l-2 2l-2 -2l-2 2l-2 -2l-3 2" />
-                        <path d="M15 7h-6h1a3 3 0 0 1 0 6h-1l3 3" />
-                        <path d="M9 10h6" />
-                    </svg>
-                    <span>Accounts</span>
+                <nav class="flex-1 p-4 space-y-2">
+                    <a href="{{ route('dashboard') }}"
+                        class="flex items-center gap-2 p-2 rounded {{ request()->routeIs('dashboard') ? 'bg-gray-700' : 'hover:bg-gray-700' }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="icon icon-tabler icons-tabler-outline icon-tabler-dashboard">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M12 13m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                            <path d="M13.45 11.55l2.05 -2.05" />
+                            <path d="M6.4 20a9 9 0 1 1 11.2 0z" />
+                        </svg>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="{{ route('accounts') }}"
+                        class="flex items-center gap-2 p-2 rounded {{ request()->routeIs('accounts') ? 'bg-gray-700' : 'hover:bg-gray-700' }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="icon icon-tabler icons-tabler-outline icon-tabler-receipt-rupee">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16l-3 -2l-2 2l-2 -2l-2 2l-2 -2l-3 2" />
+                            <path d="M15 7h-6h1a3 3 0 0 1 0 6h-1l3 3" />
+                            <path d="M9 10h6" />
+                        </svg>
+                        <span>Accounts</span>
+                    </a>
                     <a href="{{ route('transactions') }}"
                         class="flex items-center gap-2 p-2 rounded {{ request()->routeIs('transactions') ? 'bg-gray-700' : 'hover:bg-gray-700' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -67,6 +81,7 @@
                         </svg>
                         <span>Transactions</span>
                     </a>
+                    @role('admin')
                     <a href="{{ route('savings') }}"
                         class="flex items-center gap-2 p-2 rounded {{ request()->routeIs('savings') ? 'bg-gray-700' : 'hover:bg-gray-700' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -159,7 +174,9 @@
                         </svg>
                         <span>User</span>
                     </a>
-            </nav>
+                    @endrole
+                </nav>
+            @endauth
             <div class="mt-auto">
                 @guest
                     <!-- Guest (Not Logged In) -->
@@ -212,7 +229,6 @@
                     </div>
                 @endauth
             </div>
-
         </aside>
     </div>
     <!-- Main content -->
