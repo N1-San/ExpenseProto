@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -17,7 +16,10 @@ return new class extends Migration
             $table->decimal('amount', 15, 2);
             $table->enum('transaction_type', ['credit', 'debit']); // Credit or Debit
             $table->string('note')->nullable();
-            $table->date('transaction_date')->useCurrent();
+            $table->timestamp('transaction_date')->useCurrent();
+            $table->dropForeign(['account_id']);
+            $table->dropColumn('account_id');
+            $table->nullableMorphs('transactionable');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\SavingsController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -41,11 +42,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/create', [TransactionController::class, 'create'])->name('create');
         Route::post('/store', [TransactionController::class, 'store'])->name('store');
     });
-
+    
+    Route::prefix('savings')->name('savings.')->group(function () {
+        Route::get('/', [SavingsController::class, 'index'])->name('index');
+        Route::get('/create', [SavingsController::class, 'create'])->name('create');
+        Route::post('/store', [SavingsController::class, 'store'])->name('store');
+    });
 });
 
 
-Route::view('/savings', 'pages.savings.index')->name('savings');
 Route::view('/monthlyLedger', 'pages.monthlyLedger')->name('monthlyLedger');
 Route::view('/budget', 'pages.budget')->name('budget');
 Route::view('/expenses', 'pages.expenses')->name('expenses');

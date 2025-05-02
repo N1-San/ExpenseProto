@@ -82,8 +82,8 @@
                         <span>Transactions</span>
                     </a>
                     @role('admin')
-                    <a href="{{ route('savings') }}"
-                        class="flex items-center gap-2 p-2 rounded {{ request()->routeIs('savings') ? 'bg-gray-700' : 'hover:bg-gray-700' }}">
+                    <a href="{{ route('savings.index') }}"
+                        class="flex items-center gap-2 p-2 rounded {{ request()->routeIs('savings.index') ? 'bg-gray-700' : 'hover:bg-gray-700' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             class="icon icon-tabler icons-tabler-outline icon-tabler-hearts">
