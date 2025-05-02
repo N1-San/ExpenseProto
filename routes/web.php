@@ -41,6 +41,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 Route::view('/savings', 'pages.savings.index')->name('savings');
+Route::view('/loans', 'pages.loans.index')->name('loans');
 Route::view('/monthlyLedger', 'pages.monthlyLedger')->name('monthlyLedger');
 Route::view('/budget', 'pages.budget')->name('budget');
 Route::view('/expenses', 'pages.expenses')->name('expenses');
