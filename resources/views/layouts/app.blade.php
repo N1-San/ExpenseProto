@@ -54,8 +54,8 @@
                         </svg>
                         <span>Dashboard</span>
                     </a>
-                    <a href="{{ route('accounts') }}"
-                        class="flex items-center gap-2 p-2 rounded {{ request()->routeIs('accounts') ? 'bg-gray-700' : 'hover:bg-gray-700' }}">
+                    <a href="{{ route('accounts.index') }}"
+                        class="flex items-center gap-2 p-2 rounded {{ request()->routeIs('accounts.index') ? 'bg-gray-700' : 'hover:bg-gray-700' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             class="icon icon-tabler icons-tabler-outline icon-tabler-receipt-rupee">
@@ -66,8 +66,8 @@
                         </svg>
                         <span>Accounts</span>
                     </a>
-                    <a href="{{ route('transactions') }}"
-                        class="flex items-center gap-2 p-2 rounded {{ request()->routeIs('transactions') ? 'bg-gray-700' : 'hover:bg-gray-700' }}">
+                    <a href="{{ route('transactions.index') }}"
+                        class="flex items-center gap-2 p-2 rounded {{ request()->routeIs('transactions.index') ? 'bg-gray-700' : 'hover:bg-gray-700' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             class="icon icon-tabler icons-tabler-outline icon-tabler-transaction-rupee">

@@ -35,12 +35,13 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/toggleActive/{account}', [AccountController::class, 'toggleActive'])->name('toggleActive');
     });
 
-    // Transactions
+    //Transactions
     Route::prefix('transactions')->name('transactions.')->group(function () {
-        Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions');
-        Route::get('/transactions/create', [TransactionController::class, 'create'])->name('transactions.create');
-        Route::post('/transactions/store', [TransactionController::class, 'store'])->name('transactions.store');
+        Route::get('/', [TransactionController::class, 'index'])->name('index');
+        Route::get('/create', [TransactionController::class, 'create'])->name('create');
+        Route::post('/store', [TransactionController::class, 'store'])->name('store');
     });
+
 });
 
 
