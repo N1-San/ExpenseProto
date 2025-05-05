@@ -55,11 +55,8 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/', [AdminController::class,'index'])->name('admin.index');
 });
 
-<<<<<<< HEAD
-Route::view('/savings', 'pages.savings.index')->name('savings');
+Route::view('/savings', 'pages.savings.index')->name('savings.index');
 Route::view('/loans', 'pages.loans.index')->name('loans');
-=======
->>>>>>> SavingsModule
 Route::view('/monthlyLedger', 'pages.monthlyLedger')->name('monthlyLedger');
 Route::view('/budget', 'pages.budget')->name('budget');
 Route::view('/expenses', 'pages.expenses')->name('expenses');
