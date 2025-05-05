@@ -1,27 +1,38 @@
-<div class="flex flex-col gap-4">
-    <div>
-        <label for="name" class="block text-sm font-medium text-gray-300">Transaction Name</label>
-        <input type="text" name="name" id="name" value="{{ old('name', $transaction->name ?? '') }}"
-            class="mt-1 block w-full rounded-md bg-gray-800 text-white border-gray-600 focus:ring-blue-500 focus:border-blue-500">
-        @error('name')
-            <span class="text-red-500 text-sm">{{ $message }}</span>
-        @enderror
-    </div>
+<form action="{{ route('savings.transfer') }}" method="POST">
+    @csrf
 
-    <div>
-        <label for="amount" class="block text-sm font-medium text-gray-300">Total Amount</label>
-        <input type="number" name="amount" id="amount" value="{{ old('amount', $transaction->amount ?? '') }}"
-            class="mt-1 block w-full rounded-md bg-gray-800 text-white border-gray-600 focus:ring-blue-500 focus:border-blue-500">
-        @error('amount')
-            <span class="text-red-500 text-sm">{{ $message }}</span>
-        @enderror
-    </div>
+    <div class="text-gray-900">
 
-    <div class="flex items-center gap-2">
-    <input type="hidden" name="is_active" value="0">
-    <input type="checkbox" name="is_active" id="is_active" value="1"
-        class="form-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-        {{ old('is_active', $transaction->is_active ?? false) ? 'checked' : '' }}>
-    <label for="is_active" class="text-sm font-medium text-gray-300">Is Active</label>
-</div>
-</div>
+
+        <label>Transfer Type:</label>
+        <select class="text-gray-900" name="from_type" required>
+            <option value="account">Account → Savings</option>
+            <option value="savings">Savings → Account</option>
+        </select>
+
+        <label>From Account:</label>
+        <select name="from_id" required>
+            @foreach ($accounts as $account)
+                <option value="{{ $account->id }}">{{ $account->name }}</option>
+            @endforeach
+            @foreach ($savings as $saving)
+                <option value="{{ $saving->id }}">{{ $saving->name }}</option>
+            @endforeach
+        </select>
+
+        <label>To Account:</label>
+        <select name="to_id" required>
+            @foreach ($accounts as $account)
+                <option value="{{ $account->id }}">{{ $account->name }}</option>
+            @endforeach
+            @foreach ($savings as $saving)
+                <option value="{{ $saving->id }}">{{ $saving->name }}</option>
+            @endforeach
+        </select>
+
+        <label>Amount:</label>
+        <input type="number" name="amount" step="0.01" min="0" required>
+
+        <button type="submit">Transfer</button>
+    </div>
+</form>

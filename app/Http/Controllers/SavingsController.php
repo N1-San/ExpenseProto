@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\TransferToSavingsService;
+use App\Models\Account;
 use App\Models\Savings;
+
+use App\Models\SavingsAccount;
 use Illuminate\Http\Request;
 
 class SavingsController extends Controller
@@ -34,66 +38,98 @@ class SavingsController extends Controller
 
     public function create()
     {
-        $accounts = Account::where('is_active', true)->get(); 
-        $savingsAccounts = Savings::all();
+        // $accounts = Account::where('is_active', true)->get(); 
+        // $savingsAccounts = Savings::all();
+        $accounts = Account::all();
+        $savings = SavingsAccount::all();
 
-        return view('pages.savings.create', compact('accounts', 'savingsAccounts'));
+        // return view('pages.savings.create', compact('accounts', 'savingsAccounts'));
+        return view('pages.savings.create', compact('accounts', 'savings'));
     }
 
-    public function transfer(Request $request)
+    public function store(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'from_type' => 'required|in:account,savings',
             'from_id' => 'required|integer',
-            'to_type' => 'required|in:account,savings',
             'to_id' => 'required|integer',
             'amount' => 'required|numeric|min:0.01',
-            'note' => 'nullable|string',
         ]);
 
-        DB::transaction(function () use ($request) {
-            $amount = $request->amount;
-            $note = $request->note;
+        try {
+            TransferToSavingsService::transfer(
+                $request->from_type,
+                $request->from_id,
+                $request->to_id,
+                $request->amount
+            );
 
-            // Resolve models
-            $from = $request->from_type === 'account'
-                ? Account::findOrFail($request->from_id)
-                : Savings::findOrFail($request->from_id);
-
-            $to = $request->to_type === 'account'
-                ? Account::findOrFail($request->to_id)
-                : Savings::findOrFail($request->to_id);
-
-            // Check sufficient balance
-            if ($from->amount < $amount) {
-                throw ValidationException::withMessages(['amount' => 'Insufficient balance.']);
-            }
-
-            // Debit from source
-            $from->amount -= $amount;
-            $from->save();
-
-            $from->transactions()->create([
-                'amount' => $amount,
-                'transaction_type' => 'debit',
-                'note' => $note ?: 'Transfer to ' . class_basename($to) . ' #' . $to->id,
-                'transaction_date' => now(),
-            ]);
-
-            // Credit to destination
-            $to->amount += $amount;
-            $to->save();
-
-            $to->transactions()->create([
-                'amount' => $amount,
-                'transaction_type' => 'credit',
-                'note' => $note ?: 'Transfer from ' . class_basename($from) . ' #' . $from->id,
-                'transaction_date' => now(),
-            ]);
-        });
-
-        return redirect()->back()->with('success', 'Transfer completed.');
+            return redirect()->back()->with('success', 'Transfer successful!');
+        } catch (\Exception $e) {
+            dd($e);
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
+
+
+
+    // public function store(Request $request)
+    // {
+    //     dd($request->all());
+    //     // $request->validate([
+    //     //     'from_type' => 'required|in:account,savings',
+    //     //     'from_id' => 'required|integer',
+    //     //     'to_type' => 'required|in:account,savings',
+    //     //     'to_id' => 'required|integer',
+    //     //     'amount' => 'required|numeric|min:0.01',
+    //     //     'note' => 'nullable|string',
+    //     // ]);
+
+
+    //     DB::transaction(function () use ($request) {
+    //         $amount = $request->amount;
+    //         $note = $request->note;
+
+    //         // Resolve models
+    //         $from = $request->from_type === 'account'
+    //             ? Account::findOrFail($request->from_id)
+    //             : Savings::findOrFail($request->from_id);
+
+    //         $to = $request->to_type === 'account'
+    //             ? Account::findOrFail($request->to_id)
+    //             : Savings::findOrFail($request->to_id);
+
+    //         // Check sufficient balance
+    //         if ($from->amount < $amount) {
+    //             throw ValidationException::withMessages(['amount' => 'Insufficient balance.']);
+    //         }
+
+    //         // Debit from source
+    //         $from->amount -= $amount;
+    //         $from->save();
+
+    //         $from->transactions()->create([
+    //             'amount' => $amount,
+    //             'transaction_type' => 'debit',
+    //             'note' => $note ?: 'Transfer to ' . class_basename($to) . ' #' . $to->id,
+    //             'transaction_date' => now(),
+    //         ]);
+
+    //         // Credit to destination
+    //         $to->amount += $amount;
+    //         $to->save();
+
+    //         $to->transactions()->create([
+    //             'amount' => $amount,
+    //             'transaction_type' => 'credit',
+    //             'note' => $note ?: 'Transfer from ' . class_basename($from) . ' #' . $from->id,
+    //             'transaction_date' => now(),
+    //         ]);
+    //     });
+
+    //     return redirect()->back()->with('success', 'Transfer completed.');
+    // }
 
     // public function transferToSavings(Request $request)
     // {
