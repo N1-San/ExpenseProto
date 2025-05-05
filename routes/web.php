@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\AdminController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -39,6 +40,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/transactions/store', [TransactionController::class,'store'])->name('transactions.store');
 });
 
+Route::middleware(['auth'])->prefix('admin')->group(function () {
+    Route::get('/', [AdminController::class,'index'])->name('admin.index');
+});
 
 Route::view('/savings', 'pages.savings.index')->name('savings');
 Route::view('/monthlyLedger', 'pages.monthlyLedger')->name('monthlyLedger');
