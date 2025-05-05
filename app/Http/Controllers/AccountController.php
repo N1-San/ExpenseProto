@@ -42,14 +42,14 @@ class AccountController extends Controller
             'is_active' => $validatedData['is_active'],
         ]);
 
-        return redirect()->route('accounts')->with('success', 'Account created successfully.');
+        return redirect()->route('accounts.index')->with('success', 'Account created successfully.');
     }
     
     public function destroy(Account $account)
     {
         Account::destroy($account->id);
 
-        return redirect()->route('accounts')->with('success', 'Account deleted successfully.');
+        return redirect()->route('accounts.index')->with('success', 'Account deleted successfully.');
     }
     public function edit(Account $account)
     {
@@ -74,7 +74,7 @@ class AccountController extends Controller
             'is_active' => $validatedData['is_active'],
         ]);
 
-        return redirect()->route('accounts')->with('success', 'Account updated successfully.');
+        return redirect()->route('accounts.index')->with('success', 'Account updated successfully.');
     }
     public function toggleActive(Request $request)
     {
