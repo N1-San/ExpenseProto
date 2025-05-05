@@ -21,7 +21,7 @@
                 </div>
             </div>
 
-            
+
             <!-- Content -->
             <div class="p-2">
                 <!-- Tabs -->
@@ -33,17 +33,9 @@
                 </div>
                 <!-- Metrics Cards -->
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
-                    @php
-                        $totalAmount = 0;
-                        foreach ($accounts as $account) {
-                            if ($account['is_active']) {
-                                $totalAmount += $account['amount'];
-                            }
-                        }
-                    @endphp
                     <div class="bg-gray-800 p-4 rounded-md">
                         <p>Total Amount</p>
-                        <h2 class="text-2xl font-bold">₹{{ number_format($totalAmount, 2) }}</h2>
+                        <h2 class="text-2xl font-bold">₹{{ number_format($totalBalance) }}</h2>
                         <p class="text-green-500 text-xs">+20.1% from last month</p>
                     </div>
                     <div class="bg-gray-800 p-4 rounded-md">
@@ -95,36 +87,36 @@
                             Individual Account Transactions</h1>
                         <div class="grid grid-cols-3 gap-4 text-white text-sm">
                             @foreach ($accounts as $account)
-                                                @if ($account['is_active'])
-                                                                    <div class="bg-gray-900 p-4 rounded-md flex flex-col justify-between">
-                                                                        <div>
-                                                                            <h2 class="text-lg font-semibold mb-2">{{ $account['name'] }}</h2>
-                                                                            <ul class="space-y-1">
-                                                                                @php
-                                                                                    $accountTransactions = array_filter($transactions, function ($transaction) use ($account) {
-                                                                                        return $transaction['account_id'] == $account['id'];
-                                                                                    });
-                                                                                @endphp
-                                                                                @if (!empty($accountTransactions))
-                                                                                    @foreach ($accountTransactions as $transaction)
-                                                                                        <li
-                                                                                            class="text-right {{ $transaction['transaction_type'] === 'credit' ? 'text-green-500' : 'text-red-500' }}">
-                                                                                            {{ $transaction['transaction_type'] === 'credit' ? '+' : '-' }}{{ $transaction['amount'] }}
-                                                                                        </li>
-                                                                                    @endforeach
-                                                                                @else
-                                                                                    <li class="text-gray-500">No transactions available</li>
-                                                                                @endif
-                                                                            </ul>
-                                                                        </div>
-                                                                        <div class="mt-2 font-bold bg-gray-700 rounded-md p-2 text-right">
-                                                                            Total:
-                                                                            <span class="{{ $account['amount'] >= 0 ? 'text-green-500' : 'text-red-500' }}">
-                                                                                {{ $account['amount'] }}
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
+                                @if ($account['is_active'])
+                                    <div class="bg-gray-900 p-4 rounded-md flex flex-col justify-between">
+                                        <div>
+                                            <h2 class="text-lg font-semibold mb-2">{{ $account['name'] }}</h2>
+                                            <ul class="space-y-1">
+                                                @php
+                                                    $accountTransactions = array_filter($transactions, function ($transaction) use ($account) {
+                                                        return $transaction['account_id'] == $account['id'];
+                                                    });
+                                                @endphp
+                                                @if (!empty($accountTransactions))
+                                                    @foreach ($accountTransactions as $transaction)
+                                                        <li
+                                                            class="text-right {{ $transaction['transaction_type'] === 'credit' ? 'text-green-500' : 'text-red-500' }}">
+                                                            {{ $transaction['transaction_type'] === 'credit' ? '+' : '-' }}{{ $transaction['amount'] }}
+                                                        </li>
+                                                    @endforeach
+                                                @else
+                                                    <li class="text-gray-500">No transactions available</li>
                                                 @endif
+                                            </ul>
+                                        </div>
+                                        <div class="mt-2 font-bold bg-gray-700 rounded-md p-2 text-right">
+                                            Total:
+                                            <span class="{{ $account['amount'] >= 0 ? 'text-green-500' : 'text-red-500' }}">
+                                                {{ $account['amount'] }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                @endif
                             @endforeach
                         </div>
                     </div>

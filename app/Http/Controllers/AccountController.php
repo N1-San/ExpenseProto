@@ -87,7 +87,7 @@ class AccountController extends Controller
         $account->is_active = !$account->is_active;
         $account->save();
 
-        return redirect()->route('accounts')->with('success', 'Account status toggled successfully.');
+        return redirect()->route('accounts.index')->with('success', 'Account status toggled successfully.');
         // dd($request->all());
     }
 

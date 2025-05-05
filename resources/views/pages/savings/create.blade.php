@@ -4,7 +4,7 @@
 @section('content')
 <div class="bg-gray-900 text-white p-6 rounded-md">
     <h1 class="text-2xl font-semibold mb-4">Add New Transaction</h1>
-    <form action="{{ route('transactions.store') }}" method="POST">
+    <form action="{{ route('savings.store') }}" method="POST">
         @csrf
 
         <!-- Account Selection -->

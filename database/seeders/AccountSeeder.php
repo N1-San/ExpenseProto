@@ -13,12 +13,16 @@ class AccountSeeder extends Seeder
      */
     public function run(): void
     {
-        Account::insert([
-            ['name' => 'Salary', 'amount' => 26800],
-            ['name' => 'Side', 'amount' => 11670],
-            ['name' => 'Part-Time', 'amount' => 13470],
-            ['name' => 'Business 1', 'amount' => 2800],
-            ['name' => 'Business 2', 'amount' => 1670],
-        ]);
+        $accounts = [
+            ['name' => 'Salary', 'amount' => 50000, 'is_active' => 1],
+            ['name' => 'Side', 'amount' => 25000, 'is_active' => 1],
+            ['name' => 'Part-Time', 'amount' => 25000, 'is_active' => 1],
+            ['name' => 'Business 1', 'amount' => 15000, 'is_active' => 0],
+            ['name' => 'Business 2', 'amount' => 15000, 'is_active' => 0],
+        ];
+
+        foreach ($accounts as $account) {
+            Account::create($account);
+        }
     }
 }
