@@ -17,8 +17,6 @@ return new class extends Migration {
             $table->enum('transaction_type', ['credit', 'debit']); // Credit or Debit
             $table->string('note')->nullable();
             $table->timestamp('transaction_date')->useCurrent();
-            $table->dropForeign(['account_id']);
-            $table->dropColumn('account_id');
             $table->nullableMorphs('transactionable');
             $table->timestamps();
             $table->softDeletes();

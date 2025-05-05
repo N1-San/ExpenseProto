@@ -16,33 +16,27 @@ class TransactionsSeeder extends Seeder
         foreach ($accounts as $account) {
             for ($i = 0; $i < 5; $i++) {
                 $transactionType = rand(0, 1) ? 'credit' : 'debit';
-                $amount = rand(100, 5000); // Keep it reasonable
+                $amount = rand(100, 5000);
 
-                // Adjust balance
                 if ($transactionType == 'debit' && $account->amount < $amount) {
-                    // Skip if insufficient balance
                     continue;
                 }
 
                 $transaction = new Transaction([
+                    'account_id' => $account->id,
                     'amount' => $amount,
                     'transaction_type' => $transactionType,
                     'note' => Str::random(10),
                     'transaction_date' => now()->subDays(rand(0, 30)),
                 ]);
 
-                $transaction->transactionable()->associate($account);
                 $transaction->save();
 
                 // Update account balance
-                if ($transactionType == 'credit') {
-                    $account->amount += $amount;
-                } else {
-                    $account->amount -= $amount;
-                }
-
+                $account->amount += ($transactionType == 'credit') ? $amount : -$amount;
                 $account->save();
             }
         }
     }
+
 }
