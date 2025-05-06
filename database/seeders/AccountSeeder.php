@@ -14,11 +14,11 @@ class AccountSeeder extends Seeder
     public function run(): void
     {
         $accounts = [
-            ['name' => 'Salary', 'amount' => 50000, 'is_active' => 1],
-            ['name' => 'Side', 'amount' => 25000, 'is_active' => 1],
-            ['name' => 'Part-Time', 'amount' => 25000, 'is_active' => 1],
-            ['name' => 'Business 1', 'amount' => 15000, 'is_active' => 0],
-            ['name' => 'Business 2', 'amount' => 15000, 'is_active' => 0],
+            ['user_id'=>1,'account_name' => 'Salary', 'balance' => 50000, 'account_type' => 'bank', 'is_active' => 1],
+            ['user_id'=>1,'account_name' => 'Side', 'balance' => 25000, 'account_type' => 'cash', 'is_active' => 1],
+            ['user_id'=>1,'account_name' => 'Part-Time', 'balance' => 25000, 'account_type' => 'bank', 'is_active' => 1],
+            ['user_id'=>1,'account_name' => 'Business 1', 'balance' => 15000, 'account_type' => 'private', 'is_active' => 0],
+            ['user_id'=>1,'account_name' => 'Business 2', 'balance' => 15000, 'account_type' => 'govt', 'is_active' => 0],
         ];
 
         foreach ($accounts as $account) {

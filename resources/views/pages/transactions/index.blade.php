@@ -22,19 +22,34 @@
                             </div>
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
-                            Account
+                            #
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
-                            Amount
+                            User
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
                             Transaction Type
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
+                            Amount
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
+                            Source Account
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
+                            Destination Account
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
                             Note
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
-                            Date
+                            External Account Name
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
+                            Related Module
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
+                            Created At
                         </th>
                     </tr>
                 </thead>
@@ -48,19 +63,34 @@
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                            {{ $transaction->account->name }}
+                            {{ $transaction->id }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                            ₹{{ $transaction->amount }}
+                            {{ $transaction->user->name ?? 'N/A' }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                            {{ $transaction->transaction_type }}
+                            {{ ucfirst($transaction->transaction_type) }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                            {{ $transaction->note }}
+                            ₹{{ number_format($transaction->amount, 2) }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                            {{ $transaction->created_at->format('Y-m-d H:i:s') }}
+                            {{ $transaction->sourceAccount->account_name ?? 'N/A' }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                            {{ $transaction->destinationAccount->account_name ?? 'N/A' }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                            {{ $transaction->note ?? 'N/A' }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                            {{ $transaction->external_account_name ?? 'N/A' }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                            {{ $transaction->related_module ?? 'N/A' }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                            {{ $transaction->created_at->format('Y-m-d H:i') }}
                         </td>
                     </tr>
                     @endforeach

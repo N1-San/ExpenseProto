@@ -11,15 +11,16 @@ class TransactionController extends Controller
 {
     public function getCollection()
     {
-        $transactions = Transaction::with('account')->latest()->get();
-        ;
+        // $transactions = Transaction::with('user')->latest()->get()->toArray();
+        $transactions = Transaction::with(['sourceAccount', 'destinationAccount', 'user'])->get();
 
+        // dd($transactions);
         return $transactions;
     }
     public function index()
     {
         $transactions = $this->getCollection();
-        
+
         return view('pages.transactions.index', [
             'transactions' => $transactions,
         ]);
@@ -27,9 +28,9 @@ class TransactionController extends Controller
 
     public function create()
     {
-        $accounts = Account::where('is_active', true)->get(); 
+        $accounts = Account::where('is_active', true)->get();
         return view('pages.transactions.create', compact('accounts'));
-        
+
     }
 
     public function store(Request $request)
@@ -46,12 +47,12 @@ class TransactionController extends Controller
             DB::transaction(function () use ($request) {
                 $account = Account::findOrFail($request->account_id);
 
-                
+
                 if ($request->transaction_type === 'debit' && $account->amount < $request->amount) {
                     throw new \Exception('Not enough balance.');
                 }
 
-                
+
                 if ($request->transaction_type === 'credit') {
                     $account->amount += $request->amount;
                 } else {
@@ -60,7 +61,7 @@ class TransactionController extends Controller
 
                 $account->save();
 
-                
+
                 Transaction::create([
                     'account_id' => $request->account_id,
                     'amount' => $request->amount,

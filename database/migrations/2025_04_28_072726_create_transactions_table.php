@@ -12,12 +12,14 @@ return new class extends Migration {
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('account_id')->constrained()->onDelete('cascade'); // Assuming accounts table is already created
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->decimal('amount', 15, 2);
-            $table->enum('transaction_type', ['credit', 'debit']); // Credit or Debit
+            $table->enum('transaction_type', ['credit', 'debit']);
             $table->string('note')->nullable();
-            $table->timestamp('transaction_date')->useCurrent();
-            $table->nullableMorphs('transactionable');
+            $table->foreignId('source_account_id')->nullable()->constrained('accounts')->nullOnDelete();
+            $table->foreignId('destination_account_id')->nullable()->constrained('accounts')->nullOnDelete();
+            $table->string('external_account_name')->nullable();
+            $table->string('related_module')->nullable(); // e.g., "loan", "savings"
             $table->timestamps();
             $table->softDeletes();
         });

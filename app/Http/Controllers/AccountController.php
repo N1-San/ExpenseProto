@@ -9,8 +9,8 @@ class AccountController extends Controller
 {
     
     public function getCollection(){
-        $accounts = Account::all()->toArray();
-        
+        $accounts = Account::get();
+        // dd($accounts);
         return $accounts;
     }
     

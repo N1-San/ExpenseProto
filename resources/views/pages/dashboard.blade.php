@@ -86,38 +86,7 @@
                         <h1 class="text-white text-xl font-semibold mb-4 rounded-md bg-gray-900 p-4">
                             Individual Account Transactions</h1>
                         <div class="grid grid-cols-3 gap-4 text-white text-sm">
-                            @foreach ($accounts as $account)
-                                @if ($account['is_active'])
-                                    <div class="bg-gray-900 p-4 rounded-md flex flex-col justify-between">
-                                        <div>
-                                            <h2 class="text-lg font-semibold mb-2">{{ $account['name'] }}</h2>
-                                            <ul class="space-y-1">
-                                                @php
-                                                    $accountTransactions = array_filter($transactions, function ($transaction) use ($account) {
-                                                        return $transaction['account_id'] == $account['id'];
-                                                    });
-                                                @endphp
-                                                @if (!empty($accountTransactions))
-                                                    @foreach ($accountTransactions as $transaction)
-                                                        <li
-                                                            class="text-right {{ $transaction['transaction_type'] === 'credit' ? 'text-green-500' : 'text-red-500' }}">
-                                                            {{ $transaction['transaction_type'] === 'credit' ? '+' : '-' }}{{ $transaction['amount'] }}
-                                                        </li>
-                                                    @endforeach
-                                                @else
-                                                    <li class="text-gray-500">No transactions available</li>
-                                                @endif
-                                            </ul>
-                                        </div>
-                                        <div class="mt-2 font-bold bg-gray-700 rounded-md p-2 text-right">
-                                            Total:
-                                            <span class="{{ $account['amount'] >= 0 ? 'text-green-500' : 'text-red-500' }}">
-                                                {{ $account['amount'] }}
-                                            </span>
-                                        </div>
-                                    </div>
-                                @endif
-                            @endforeach
+                            
                         </div>
                     </div>
 

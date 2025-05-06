@@ -24,7 +24,7 @@ class DashboardController extends Controller
     public function getTotalBalance()
     {
         $activeAccounts = Account::where('is_active', true)->get();
-        $totalAccountBalance = $activeAccounts->sum('amount');
+        $totalAccountBalance = $activeAccounts->sum('balance');
         return $totalAccountBalance;
     }
     public function getSavingBalance()

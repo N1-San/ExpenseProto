@@ -11,18 +11,22 @@ class Transaction extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'account_id',
-        'amount',
-        'transaction_type',
-        'note',
+        'user_id', 'amount', 'transaction_type', 'note',
+        'source_account_id', 'destination_account_id', 'external_account_name', 'related_module'
     ];
 
-    public function account()
+    public function user()
     {
-        return $this->belongsTo(Account::class);
+        return $this->belongsTo(User::class);
     }
-    public function transactionable()
+
+    public function sourceAccount()
     {
-        return $this->morphTo();
+        return $this->belongsTo(Account::class, 'source_account_id');
+    }
+
+    public function destinationAccount()
+    {
+        return $this->belongsTo(Account::class, 'destination_account_id');
     }
 }
