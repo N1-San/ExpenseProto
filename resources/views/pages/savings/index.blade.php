@@ -6,8 +6,7 @@
         <div class="flex justify-between items-center bg-gray-900 p-4 mb-4 rounded-md">
             <h1 class="text-2xl font-semibold  rounded-md mb-2">Savings</h1>
             <a href="{{ route('savings.create') }}"
-                class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Add
-                Account</a>
+                class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Add to Savings</a>
         </div>
         <div class="flex justify-between items-center bg-gray-900 p-4 mb-4 rounded-md">
             <h1 class="text-2xl font-semibold mb-2">Total Savings Balance</h1>
