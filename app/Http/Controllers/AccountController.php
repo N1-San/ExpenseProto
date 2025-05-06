@@ -4,21 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AccountController extends Controller
 {
-    
-    public function getCollection(){
+
+    public function getCollection()
+    {
         $accounts = Account::get();
         // dd($accounts);
         return $accounts;
     }
-    
+
     public function index()
     {
         $accounts = $this->getCollection();
         // dd($accounts);
-        return view('pages.accounts.index',[
+        return view('pages.accounts.index', [
             'accounts' => $accounts,
         ]);
     }
@@ -30,21 +32,38 @@ class AccountController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'amount' => 'required|numeric',
-            'is_active' => 'required|boolean',
-        ]);
+        // dd($request->all());
+        try {
+            $validatedData = $request->validate([
+                'account_name' => 'required|string|max:255',
+                'balance' => 'required|numeric',
+                'account_type' => 'required|string|max:255',
+                'is_active' => 'required|boolean',
+            ]);
 
-        Account::create([
-            'name' => $validatedData['name'],
-            'amount' => $validatedData['amount'],
-            'is_active' => $validatedData['is_active'],
-        ]);
+            $userId = Auth::id(); // This returns the ID of the authenticated user
+
+            // dd('working');
+
+            $account = new Account;
+            $account->fill($validatedData);
+            $account->user_id = $userId;
+            $account->save();
+            // Account::create([
+            //     'account_name' => $validatedData['account_name'],
+            //     'balance' => $validatedData['amount'],
+            //     'account_type' => $validatedData['account_type'],
+            //     'is_active' => $validatedData['is_active'],
+            // ]);
+
+        } catch (Exception $e) {
+            dd($e->getMessage());
+            return back()->withErrors(['error' => $e->getMessage()]);
+        }
 
         return redirect()->route('accounts.index')->with('success', 'Account created successfully.');
     }
-    
+
     public function destroy(Account $account)
     {
         Account::destroy($account->id);

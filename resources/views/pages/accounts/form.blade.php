@@ -1,7 +1,7 @@
 <div class="flex flex-col gap-4">
     <div>
         <label for="name" class="block text-sm font-medium text-gray-300">Account Name</label>
-        <input type="text" name="name" id="name" value="{{ old('name', $account->name ?? '') }}"
+        <input type="text" name="account_name" id="account_name" value="{{ old('account_name', $account->account_name ?? '') }}"
             class="mt-1 block w-full rounded-md bg-gray-800 text-white border-gray-600 focus:ring-blue-500 focus:border-blue-500">
         @error('name')
             <span class="text-red-500 text-sm">{{ $message }}</span>
@@ -9,10 +9,18 @@
     </div>
 
     <div>
-        <label for="amount" class="block text-sm font-medium text-gray-300">Total Amount</label>
-        <input type="number" name="amount" id="amount" value="{{ old('amount', $account->amount ?? '') }}"
+        <label for="amount" class="block text-sm font-medium text-gray-300">Account Balance</label>
+        <input type="number" name="balance" id="balance" value="{{ old('balance', $account->balance ?? '') }}"
             class="mt-1 block w-full rounded-md bg-gray-800 text-white border-gray-600 focus:ring-blue-500 focus:border-blue-500">
         @error('amount')
+            <span class="text-red-500 text-sm">{{ $message }}</span>
+        @enderror
+    </div>
+    <div>
+        <label for="name" class="block text-sm font-medium text-gray-300">Account Type</label>
+        <input type="text" name="account_type" id="account_type" value="{{ old('account_type', $account->account_type ?? '') }}"
+            class="mt-1 block w-full rounded-md bg-gray-800 text-white border-gray-600 focus:ring-blue-500 focus:border-blue-500">
+        @error('name')
             <span class="text-red-500 text-sm">{{ $message }}</span>
         @enderror
     </div>
