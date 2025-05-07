@@ -41,23 +41,15 @@ class AccountController extends Controller
                 'is_active' => 'required|boolean',
             ]);
 
-            $userId = Auth::id(); // This returns the ID of the authenticated user
-
-            // dd('working');
+            $userId = Auth::id(); 
 
             $account = new Account;
             $account->fill($validatedData);
             $account->user_id = $userId;
             $account->save();
-            // Account::create([
-            //     'account_name' => $validatedData['account_name'],
-            //     'balance' => $validatedData['amount'],
-            //     'account_type' => $validatedData['account_type'],
-            //     'is_active' => $validatedData['is_active'],
-            // ]);
 
         } catch (Exception $e) {
-            dd($e->getMessage());
+            // dd($e->getMessage());
             return back()->withErrors(['error' => $e->getMessage()]);
         }
 
@@ -77,19 +69,26 @@ class AccountController extends Controller
             'is_active' => $account->is_active,
         ]);
     }
-    public function update(Request $request, Account $account)
+    public function update(Request $request)
     {
+        // dd($request->all());
+        // dd($account->all()->toArray());
         $validatedData = $request->validate([
             'id' => 'required|integer|exists:accounts,id',
-            'name' => 'required|string|max:255',
-            'amount' => 'required|numeric',
+            'account_name' => 'required|string|max:255',
+            'balance' => 'required|numeric',
+            'account_type' => 'required|string|max:255',
             'is_active' => 'required|boolean',
         ]);
 
+        $userId = Auth::id(); 
+
         $account = Account::findOrFail($validatedData['id']);
+        $account->user_id = $userId;
         $account->update([
-            'name' => $validatedData['name'],
-            'amount' => $validatedData['amount'],
+            'account_name' => $validatedData['account_name'],
+            'balance' => $validatedData['balance'],
+            'account_type' => $validatedData['account_type'],
             'is_active' => $validatedData['is_active'],
         ]);
 
