@@ -11,7 +11,7 @@
         </div>
         @php
             $totalAmount = 0;
-            foreach ($accounts as $account) {
+            foreach ($activeAccounts as $account) {
                 if ($account['is_active']) {
                     $totalAmount += $account['balance'];
                 }
